@@ -9,6 +9,12 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
+; Set default indent size to 2
+(setq standard-indent 2)
+
+; Set indentation to spaces, not tabs
+(setq-default indent-tabs-mode nil)
+
 ; Hide menubar
 (menu-bar-mode -1)
 
