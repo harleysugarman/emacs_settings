@@ -15,8 +15,19 @@
 ; Set indentation to spaces, not tabs
 (setq-default indent-tabs-mode nil)
 
+; Enable auto-indentation
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
 ; Hide menubar
 (menu-bar-mode -1)
+
+;Enable line numbers (and put one space in the margin)
+(global-linum-mode 1)
+(setq linum-format "%d ")
+
+; Inhibit splash screen and start with *scratch* buffer
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message t)
 
 ; Clear the eshell buffer by typing 'clear'
 (defun eshell/clear ()
