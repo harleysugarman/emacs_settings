@@ -9,6 +9,10 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
+; Require IDO
+(require 'ido)
+(ido-mode t)
+
 ; Set default indent size to 2
 (setq standard-indent 2)
 
@@ -21,7 +25,7 @@
 ; Hide menubar
 (menu-bar-mode -1)
 
-;Enable line numbers (and put one space in the margin)
+; Enable line numbers (and put one space in the margin)
 (global-linum-mode 1)
 (setq linum-format "%d ")
 
