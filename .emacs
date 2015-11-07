@@ -33,6 +33,13 @@
 (global-linum-mode 1)
 (setq linum-format "%d ")
 
+;;; Add ruler at column 80 and display by default in prog-mode
+(require 'fill-column-indicator)
+(add-hook 'prog-mode-hook (lambda ()
+                            (fci-mode 1)
+                            (setq fci-rule-column 80)
+                            ))
+
 ;;; Inhibit splash screen and start with *scratch* buffer
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
@@ -47,9 +54,17 @@
 (load "~/.emacs.d/elpa/color-theme-monokai-0.0.5/color-theme-monokai.el")
 (color-theme-monokai)
 
+;;; Set window size (100*50)
+(setq default-frame-alist
+      '(
+        (width . 102) ; character
+        (height . 52) ; lines
+        ))
+
 ;;; On a fresh install of emacs:
 ;;; - Install from the package manager:
 ;;; -- autocomplete
 ;;; -- clojure-mode
 ;;; -- cider
 ;;; -- color-theme-monokai
+;;; -- fill-column-indicator
