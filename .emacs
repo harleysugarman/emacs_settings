@@ -17,7 +17,7 @@
 (require 'auto-complete-config)
 (ac-config-default)
 
-; Set default indent size to 4
+;;; Set default indent size to 4
 (setq standard-indent 4)
 
 ;;; Set indentation to spaces, not tabs
