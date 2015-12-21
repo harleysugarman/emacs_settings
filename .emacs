@@ -5,13 +5,30 @@
 (require 'package)
 (package-initialize)
 
-;;; Add Marmalade package repo to package manager
+;;; Add Marmalade/MELPA package repos to package manager
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 
 ;;; Require IDO
 (require 'ido)
 (ido-mode t)
+
+;;; Enable web-mode for web development
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . web-mode))
 
 ;;; Enable autocomplete
 (require 'auto-complete-config)
@@ -57,7 +74,7 @@
 ;;; Set window size (100*50)
 (setq default-frame-alist
       '(
-        (width . 102) ; character
+        (width . 92) ; character
         (height . 52) ; lines
         ))
 
@@ -68,3 +85,4 @@
 ;;; -- cider
 ;;; -- color-theme-monokai
 ;;; -- fill-column-indicator
+;;; -- web-mode
