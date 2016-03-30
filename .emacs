@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;;; On a fresh install of emacs (24.x, MacOSX):
+;;; On a fresh install of Emacs (24.x, MacOSX):
 ;;; - Install from the package manager:
 ;;; -- autocomplete
 ;;; -- clojure-mode
@@ -55,9 +55,6 @@
 
 ; Set default indent size to 4
 (setq standard-indent 4)
-
-;;; Set indentation to spaces, not tabs
-(setq-default indent-tabs-mode nil)
 
 ;;; Enable auto-indentation
 (define-key global-map (kbd "RET") 'newline-and-indent)
