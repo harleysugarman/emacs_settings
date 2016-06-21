@@ -1,16 +1,14 @@
 ;;; .emacs --- Harley Sugarman's emacs Configuration
 
-;;; Commentary:
+;;; Comments:
 
 ;;; On a fresh install of Emacs (24.x, MacOSX):
-;;; - Install from the package manager:
+;;; - Install from the package manager (MELPA first, then Marmalade):
 ;;; -- autocomplete
-;;; -- clojure-mode
-;;; -- cider
-;;; -- color-theme-monokai
+;;; -- spacegray-theme
 ;;; -- fill-column-indicator
 ;;; -- web-mode
-;;; -- multiple-cursors (from MELPA)
+;;; -- multiple-cursors
 
 ;;; Code:
 
@@ -83,9 +81,11 @@
   (let ((inhibit-read-only t))
     (erase-buffer)))
 
-;;; Add Monokai color theme
-(load "~/.emacs.d/elpa/color-theme-monokai-0.0.5/color-theme-monokai.el")
-(color-theme-monokai)
+;;; Add Spacegray color theme
+(load-theme 'spacegray t)
+
+;;; Highlight the current line
+(global-hl-line-mode 1)
 
 ;;; Set font (Inconsolata, 14pt)
 (set-frame-font "Inconsolata-14")
