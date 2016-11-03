@@ -1,34 +1,61 @@
 ;;; .emacs --- Harley Sugarman's emacs Configuration
 
-;;; Comments:
+;;;; Commentary:
 
-;;; On a fresh install of Emacs (24.x, MacOSX):
-;;; - Install from the package manager (MELPA first, then Marmalade):
-;;; -- autocomplete
-;;; -- spacegray-theme
-;;; -- fill-column-indicator
-;;; -- web-mode
-;;; -- multiple-cursors
+;;; This file loads all necessary plugins for a fresh Emacs install and
+;;; configures the editor to run with the correct settings.
 
-;;; Code:
+;;;; Code:
+
+;;; Require Common Lisp
+(require 'cl-lib)
+
+;;; Require package manager
+(require 'package)
+(package-initialize)
+
+;;; Add MELPA package repo to package manager
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+
+
+;;; Packages to be installed at launch
+(defvar emacs-packages
+  '(auto-package-update
+    auto-complete
+    fill-column-indicator
+    flycheck
+    multiple-cursors
+    powerline
+    spacegray-theme
+    web-mode
+    whitespace))
+
+;;; Predicate to check if all correct packages installed
+(defun packages-installed-p ()
+  "Loop through all packages and check if installed."
+  (cl-loop for p in emacs-packages
+	   when (not (package-installed-p p)) do (cl-return nil)
+	   finally (cl-return t)))
+
+;;; Loop through all necessary packages and installed any that are not found
+(unless (packages-installed-p)
+  ;; check for new packages (package versions)
+  (package-refresh-contents)
+  ;; install the missing packages
+  (dolist (p emacs-packages)
+    (when (not (package-installed-p p))
+      (package-install p))))
 
 ;;; Set backup directory
 (setq backup-directory-alist `(("." . "~/.emacs_saves")))
 
-;;; Require package manager 
-(require 'package)
-(package-initialize)
-
-;;; Add Marmalade/MELPA package repos to package manager
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-
 ;;; Require IDO
 (require 'ido)
 (ido-mode t)
+
+;;; Require Powerline
+(powerline-default-theme)
 
 ;;; Enable web-mode for web development
 
@@ -51,18 +78,21 @@
 ;;; Enable flycheck
 (global-flycheck-mode)
 
-; Set default indent size to 4
-(setq standard-indent 4)
+;;; Set default indent size to 4
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode t)
 
 ;;; Enable auto-indentation
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;;; Hide menubar
-(menu-bar-mode -1)
+(menu-bar-mode nil)
 
-;;; Enable line numbers (and put one space in the margin)
-(global-linum-mode 1)
-(setq linum-format "%d ")
+;;; Enable line numbers (and put space in the margin)
+(global-linum-mode t)
+(setq-default right-fringe-width  0)
+(setq-default left-fringe-width  10)
+(setq linum-format "%4d\u2502")
 
 ;;; Add ruler at column 80 and display by default in prog-mode
 (require 'fill-column-indicator)
@@ -77,6 +107,7 @@
 
 ;;; Clear the eshell buffer by typing 'clear'
 (defun eshell/clear ()
+  "Clear the eshell buffer."
   (interactive)
   (let ((inhibit-read-only t))
     (erase-buffer)))
@@ -86,6 +117,21 @@
 
 ;;; Highlight the current line
 (global-hl-line-mode 1)
+
+;;; Show whitespace
+(global-whitespace-mode t)
+
+(custom-set-faces
+ '(whitespace-space ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-empty ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-hspace ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-indentation ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-newline ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-space-after-tab ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-space-before-tab ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-tab ((t (:bold t :background nil :foreground "gray25"))))
+ '(whitespace-trailing ((t (:bold t :background nil :foreground "gray25"))))
+ )
 
 ;;; Set font (Inconsolata, 14pt)
 (set-frame-font "Inconsolata-14")
@@ -103,7 +149,12 @@
 (global-set-key (kbd "C-c C->") 'mc/mark-all-like-this)
 
 ;;; Set window size to be maximized (this must be done last)
-(toggle-frame-maximized)
+(setq initial-frame-alist
+      '(
+        (width . 100) ; character
+        (height . 40) ; lines
+        ))
 
 (provide `.emacs)
+
 ;;; .emacs ends here
